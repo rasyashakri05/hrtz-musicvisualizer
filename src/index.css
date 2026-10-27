@@ -136,6 +136,21 @@ audio {
   margin-right: 8px;
 }
 
-.theme-btn { margin-left: auto; }
-
 :root[data-theme="light"] audio { filter: grayscale(1); }
+
+.top { align-items: center; }
+
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+}

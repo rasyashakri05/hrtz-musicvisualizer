@@ -6,6 +6,35 @@ const ROWS = 18;
 const CELL = 5;
 const SIZE = 4;
 
+function SunIcon() {
+  return (
+    <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" shapeRendering="crispEdges" aria-hidden="true">
+      <rect x="6" y="6" width="4" height="4" />
+      <rect x="7" y="1" width="2" height="2" />
+      <rect x="7" y="13" width="2" height="2" />
+      <rect x="1" y="7" width="2" height="2" />
+      <rect x="13" y="7" width="2" height="2" />
+      <rect x="3" y="3" width="2" height="2" />
+      <rect x="11" y="3" width="2" height="2" />
+      <rect x="3" y="11" width="2" height="2" />
+      <rect x="11" y="11" width="2" height="2" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg viewBox="0 0 8 8" width="18" height="18" fill="currentColor" shapeRendering="crispEdges" aria-hidden="true">
+      <rect x="2" y="0" width="3" height="1" />
+      <rect x="1" y="1" width="2" height="1" />
+      <rect x="0" y="2" width="2" height="4" />
+      <rect x="1" y="6" width="2" height="1" />
+      <rect x="6" y="6" width="1" height="1" />
+      <rect x="2" y="7" width="4" height="1" />
+    </svg>
+  );
+}
+
 export default function App() {
   const audioRef = useRef(null);
   const canvasRef = useRef(null);
@@ -50,6 +79,7 @@ export default function App() {
   async function toggleMic() {
     if (micOn) {
       stopMic();
+      setFileName("");
       return;
     }
     try {
@@ -91,7 +121,6 @@ export default function App() {
     const c = canvas.getContext("2d");
     let frameId;
 
-    // read the colors from the CSS variables
     const css = getComputedStyle(document.documentElement);
     const FG = css.getPropertyValue("--fg").trim();
     const ACCENT = css.getPropertyValue("--accent").trim();
@@ -145,19 +174,19 @@ export default function App() {
           }
         }
       } else {
-        const W = canvas.width; // 160
-        const H = canvas.height; // 90
+        const W = canvas.width;
+        const H = canvas.height;
         const mid = H / 2;
-        const gain = 2; // make the wave taller
+        const gain = 2;
         let prevY = null;
         c.fillStyle = FG;
         for (let x = 0; x < W; x++) {
           const sample = data[Math.floor((x / (W - 1)) * 1023)];
           let y = Math.round(mid + ((sample - 128) / 128) * mid * gain);
-          y = Math.max(1, Math.min(H - 3, y)); // keep it inside the screen
+          y = Math.max(1, Math.min(H - 3, y));
           const from = prevY === null ? y : Math.min(prevY, y);
           const to = prevY === null ? y : Math.max(prevY, y);
-          c.fillRect(x, from, 1, to - from + 2); // one pixel column
+          c.fillRect(x, from, 1, to - from + 2);
           prevY = y;
         }
       }
@@ -171,9 +200,19 @@ export default function App() {
     <div className="app">
       <div className="top">
         <span>Audio / Visualizer</span>
-        <span>
-          0{MODES.indexOf(mode) + 1} / 0{MODES.length}
-        </span>
+        <div className="top-right">
+          <span>
+            0{MODES.indexOf(mode) + 1} / 0{MODES.length}
+          </span>
+          <button
+            className="btn icon-btn"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Light mode" : "Dark mode"}
+          >
+            {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+          </button>
+        </div>
       </div>
 
       <h1>
@@ -198,12 +237,6 @@ export default function App() {
             {m}
           </button>
         ))}
-        <button
-          className="btn theme-btn"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          {theme === "dark" ? "Light" : "Dark"}
-        </button>
       </div>
 
       <canvas ref={canvasRef} width={160} height={90} className="screen" />
@@ -211,7 +244,7 @@ export default function App() {
       <audio ref={audioRef} controls />
 
       <footer className="watermark">
-        <span><i />Made by rsy</span>
+        <span><i />Made by RSY</span>
         <span>2026</span>
       </footer>
     </div>
