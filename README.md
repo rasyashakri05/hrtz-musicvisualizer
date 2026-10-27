@@ -1,16 +1,46 @@
-# React + Vite
+# Hrtz
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A pixel-style music visualizer. Upload a song or use your mic, and watch the sound turn into blocks of light.
 
-Currently, two official plugins are available:
+**Live demo:** [hrtz.vercel.app](https://hrtz.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Upload an audio file or use your microphone
+- Three visual modes: **bars**, **circle** and **wave**
+- Bitmap look: a tiny low-resolution canvas scaled up, drawn with square LED-style blocks
+- Light and dark mode (remembers your choice)
+- Works on desktop and phone
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## How it works
 
-## Expanding the Oxlint configuration
+The audio goes into the Web Audio API's `AnalyserNode`. It uses an FFT to tell us how loud each frequency is, many times per second. A `requestAnimationFrame` loop reads these numbers and draws them as blocks on a 160×90 canvas. CSS scales the canvas up with `image-rendering: pixelated`, which gives the bitmap effect.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Tech stack
+
+- React + Vite
+- Web Audio API
+- Canvas 2D
+- Deployed on Vercel
+
+## Run it locally
+
+You need Node.js 18 or newer.
+
+```bash
+git clone https://github.com/rasyashakri05/Hrtz.git
+cd Hrtz
+npm install
+npm run dev
+```
+
+Then open the link shown in the terminal (usually `http://localhost:5173`).
+
+## Notes
+
+- Microphone access needs `localhost` or HTTPS, and the browser will ask for permission.
+- Browsers block audio until you click something, so start with the upload or mic button.
+
+## Author
+
+Made by RSY ([@rasyashakri05](https://github.com/rasyashakri05))
