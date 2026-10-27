@@ -43,4 +43,4 @@ Then open the link shown in the terminal (usually `http://localhost:5173`).
 
 ## Author
 
-Made by RSY ([@rasyashakri05](https://github.com/rasyashakri05))
+Made by rsy ([@rasyashakri05](https://github.com/rasyashakri05))
