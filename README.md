@@ -28,8 +28,8 @@ The audio goes into the Web Audio API's `AnalyserNode`. It uses an FFT to tell u
 You need Node.js 18 or newer.
 
 ```bash
-git clone https://github.com/rasyashakri05/Hrtz.git
-cd Hrtz
+git clone https://github.com/rasyashakri05/hrtz-musicvisualizer.git
+cd hrtz-musicvisualizer
 npm install
 npm run dev
 ```
