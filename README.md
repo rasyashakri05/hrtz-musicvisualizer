@@ -9,7 +9,7 @@ A pixel-style music visualizer. Upload a song or use your mic, and watch the sou
 - Upload an audio file or use your microphone
 - Three visual modes: **bars**, **circle** and **wave**
 - Bitmap look: a tiny low-resolution canvas scaled up, drawn with square LED-style blocks
-- Light and dark mode (remembers your choice)
+- Light and dark mode 
 - Works on desktop and phone
 
 ## How it works
